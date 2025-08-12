@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #011322;
+  min-height: 100vh;
+  overflow: hidden;
+  color: #607B96;
+  font-family: 'JetBrains Mono', monospace;
+}
