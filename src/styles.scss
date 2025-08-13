@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-padding-top: 80px; /* Adjust to match your nav height */
+}
+
 html, body {
   margin: 0;
   padding: 0;
