@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   currentPart = 0;
   showSkills = false;
   private textParts = [
-    'Hello, it\'s Hamza.',
+    'Hello, it\'s Hamza...',
   ];
   private index = 0;
   private typingSpeed = 100;
