@@ -1,26 +1,47 @@
 <section id="about" class="about-me-section">
-  <div *ngIf="loading$ | async" class="loader">Loading...</div>
   
-  <ng-container *ngIf="aboutMe$ | async as aboutMe; else defaultContent">
-    <h1>{{ aboutMe.title || 'About Me' }}</h1>
-    <p>{{ aboutMe.description }}</p>
-    
-    <div *ngIf="aboutMe.skills?.length" class="skills-container">
-      <h2>Skills</h2>
-      <div class="skills">
-        <span class="skill" *ngFor="let skill of aboutMe.skills">{{ skill }}</span>
-      </div>
+  <!-- Background animation -->
+  <div class="background-animation">
+    <div *ngFor="let i of [].constructor(12); let idx = index" 
+         class="circuit-line"
+         [style.top]="(idx * 8) + '%'"
+         [style.left]="(idx * 7) + '%'"
+         [style.transform]="'rotate(' + (idx * 30 - 15) + 'deg)'">
+      <div class="branch-1"></div>
+      <div class="branch-2"></div>
     </div>
-  </ng-container>
-  
-  <ng-template #defaultContent>
-    <h1>About Me</h1>
-    <p>
-      Hi, I'm Hamza! I'm a backend engineer passionate about building scalable and efficient systems. I love working with Node.js, Python, Docker, and cloud technologies. My experience spans across designing APIs, managing databases, and deploying applications on AWS.
-    </p>
-  </ng-template>
-  
-  <div *ngIf="error$ | async as error" class="error">
-    <p>Error loading about me data: {{ error.message }}</p>
+
+    <div *ngFor="let i of [].constructor(8); let idx = index"
+         class="node"
+         [style.top]="(idx * 12) + '%'"
+         [style.left]="(idx * 11) + '%'">
+    </div>
+  </div>
+
+  <div class="about-me-card">
+    <div *ngIf="loading$ | async" class="loader">Loading...</div>
+    
+    <ng-container *ngIf="aboutMe$ | async as aboutMe; else defaultContent">
+      <h1>{{ aboutMe.title || 'About Me' }}</h1>
+      <p>{{ aboutMe.description }}</p>
+      
+      <div *ngIf="aboutMe.skills?.length" class="skills-container">
+        <h2>Skills</h2>
+        <div class="skills">
+          <span class="skill" *ngFor="let skill of aboutMe.skills">{{ skill }}</span>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-template #defaultContent>
+      <h1>About Me</h1>
+      <p>
+        Hi, I'm Hamza! I'm a backend engineer passionate about building scalable and efficient systems. I love working with Node.js, Python, Docker, and cloud technologies. My experience spans across designing APIs, managing databases, and deploying applications on AWS.
+      </p>
+    </ng-template>
+    
+    <div *ngIf="error$ | async as error" class="error">
+      <p>Error loading about me data: {{ error.message }}</p>
+    </div>
   </div>
 </section>
