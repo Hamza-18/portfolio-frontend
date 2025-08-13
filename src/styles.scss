@@ -10,7 +10,8 @@ html, body {
   padding: 0;
   background: #011322;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   color: #607B96;
   font-family: 'JetBrains Mono', monospace;
 }

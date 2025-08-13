@@ -1,10 +1,10 @@
 
 <nav class="header-nav">
 	<ul>
-		<li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a></li>
-		<li><a routerLink="/about" routerLinkActive="active">About</a></li>
-		<li><a routerLink="/projects" routerLinkActive="active">Projects</a></li>
-		<li><a routerLink="/experience" routerLinkActive="active">Experience</a></li>
-		<li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
+		<li><a href="#" (click)="scrollToSection('top', $event)">Home</a></li>
+		<li><a href="#about" (click)="scrollToSection('about', $event)">About</a></li>
+		<li><a href="#projects" (click)="scrollToSection('projects', $event)">Projects</a></li>
+		<li><a href="#experience" (click)="scrollToSection('experience', $event)">Experience</a></li>
+		<li><a href="#contact" (click)="scrollToSection('contact', $event)">Contact</a></li>
 	</ul>
 </nav>
