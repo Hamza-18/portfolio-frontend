@@ -12,6 +12,7 @@
   position: relative;
   overflow: visible;
   padding: 2rem;
+  padding-top: 60px; /* height of your nav */
 }
 
 @keyframes pulse-line {
@@ -323,4 +324,14 @@
 @keyframes sweep {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+app-header-navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* high to stay on top */
+  background-color: #011221; /* or whatever background you want */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3); /* subtle shadow if desired */
 }
