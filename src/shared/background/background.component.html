@@ -1,0 +1,38 @@
+<!-- Main circuit lines - distributed more evenly -->
+<div *ngFor="let i of [].constructor(25); let idx = index" 
+     class="circuit-line"
+     [style.top]="(5 + idx * 4 + (idx % 3 === 0 ? 2 : -1)) + '%'"
+     [style.left]="(3 + idx * 4 + (idx % 2 === 0 ? 3 : -2)) + '%'"
+     [style.width]="(80 + (idx * 7) % 40) + 'px'"
+     [style.transform]="'rotate(' + ((idx * 25) % 180 - 90) + 'deg)'">
+  <div class="branch-1" 
+       [style.transform]="'rotate(' + ((idx * 45) % 90 + 20) + 'deg)'"
+       [style.top]="(idx % 2 === 0 ? '-5px' : '5px')"></div>
+  <div class="branch-2" 
+       [style.transform]="'rotate(' + (-(idx * 30) % 90 - 30) + 'deg)'"
+       [style.top]="(idx % 2 === 0 ? '5px' : '-5px')"></div>
+</div>
+
+<!-- Secondary circuit lines for more background detail -->
+<div *ngFor="let i of [].constructor(15); let idx = index" 
+     class="circuit-line secondary"
+     [style.top]="(12 + idx * 6 + (idx % 4 === 0 ? 3 : -1)) + '%'"
+     [style.left]="(65 + idx * 2.5) + '%'"
+     [style.width]="(60 + (idx * 5) % 30) + 'px'"
+     [style.transform]="'rotate(' + ((idx * 30 + 90) % 180 - 90) + 'deg)'">
+</div>
+
+<!-- Nodes distributed across the background -->
+<div *ngFor="let i of [].constructor(20); let idx = index"
+     class="node"
+     [class.large]="idx % 5 === 0"
+     [style.top]="(7 + idx * 5 + (idx % 3) * 4) + '%'"
+     [style.left]="(8 + idx * 5 + (idx % 4) * 3) + '%'">
+</div>
+
+<!-- Small connector dots -->
+<div *ngFor="let i of [].constructor(40); let idx = index"
+     class="dot"
+     [style.top]="(10 + (idx * 13) % 85) + '%'"
+     [style.left]="(15 + (idx * 17) % 75) + '%'">
+</div>

@@ -5,12 +5,17 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-padding-top: 80px; /* Adjust to match your nav height */
+}
+
 html, body {
   margin: 0;
   padding: 0;
   background: #011322;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   color: #607B96;
   font-family: 'JetBrains Mono', monospace;
 }

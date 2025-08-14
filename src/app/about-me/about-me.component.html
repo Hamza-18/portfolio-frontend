@@ -1,0 +1,31 @@
+<section id="about" class="about-me-section">
+  
+  <!-- Background is now handled at the app level -->
+
+  <div class="about-me-card">
+    <div *ngIf="loading$ | async" class="loader">Loading...</div>
+    
+    <ng-container *ngIf="aboutMe$ | async as aboutMe; else defaultContent">
+      <h1>{{ aboutMe.title || 'About Me' }}</h1>
+      <p [innerHTML]="aboutMe.description"></p>
+      
+      <div *ngIf="aboutMe.skills?.length" class="skills-container">
+        <h2>Skills</h2>
+        <div class="skills">
+          <span class="skill" *ngFor="let skill of aboutMe.skills">{{ skill }}</span>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-template #defaultContent>
+      <h1>About Me</h1>
+      <p>
+        Hi, I'm Hamza! I'm a backend engineer passionate about building scalable and efficient systems. I love working with Node.js, Python, Docker, and cloud technologies. My experience spans across designing APIs, managing databases, and deploying applications on AWS.
+      </p>
+    </ng-template>
+    
+    <div *ngIf="error$ | async as error" class="error">
+      <p>Error loading about me data: {{ error.message }}</p>
+    </div>
+  </div>
+</section>
