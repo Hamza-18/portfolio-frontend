@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -7,126 +7,146 @@ import { filter } from 'rxjs/operators';
   templateUrl: './header-navigation.component.html',
   styleUrls: ['./header-navigation.component.scss']
 })
-export class HeaderNavigationComponent implements OnInit, AfterViewInit {
-  
-  currentSection: string = 'top';
+export class HeaderNavigationComponent implements AfterViewInit, OnDestroy {
+
+  currentSection = 'top';
   sections = ['top', 'about', 'projects', 'experience', 'contact'];
-  sectionsOffsets: { [key: string]: number } = {};
 
-  constructor(private router: Router) {}
+  private observer?: IntersectionObserver;
+  private visibility = new Map<string, number>();
+  private scrollRoot: Element | null = null; // set to your scroll container if not window
+  private headerHeight = 0;
 
-  ngOnInit() {
-    // Listen for route changes
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      // After navigation ends, recalculate section offsets and check scroll position
-      setTimeout(() => {
-        this.calculateSectionOffsets();
-        this.checkScrollPosition();
-      }, 100);
-    });
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => setTimeout(() => this.setupObserver(), 0));
   }
 
-  ngAfterViewInit() {
-    // Calculate section offsets after view is initialized
-    setTimeout(() => {
-      this.calculateSectionOffsets();
-      this.checkScrollPosition(); // Check initial position
-    }, 100);
+  ngAfterViewInit(): void {
+    this.setupObserver();
+    window.addEventListener('resize', this.handleResize, { passive: true });
   }
 
-  calculateSectionOffsets() {
-    // Get all section elements and their positions
-    this.sections.forEach(section => {
-      const element = document.getElementById(section);
-      if (element) {
-        this.sectionsOffsets[section] = element.offsetTop;
-      }
-    });
-    
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+    window.removeEventListener('resize', this.handleResize);
   }
 
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    this.checkScrollPosition();
+  // If your app uses a custom scrolling div, set it here.
+  // Example: this.scrollRoot = document.querySelector('.content-scroll');
+  private detectScrollRoot() {
+    this.scrollRoot = null; // keep null to use window; change if you use a scrollable container
   }
 
-  checkScrollPosition() {
-    const scrollPosition = window.pageYOffset;
-    const headerHeight = document.querySelector('app-header-navigation')?.clientHeight || 0;
-    const adjustedScrollPosition = scrollPosition + headerHeight + 50; // Add extra offset for better detection
-    
-    console.log('Scroll position:', scrollPosition, 'Adjusted position:', adjustedScrollPosition);
-    
-    // Default to top
-    let activeSection = 'top';
-    let highestVisibleSection = -1;
-    
-    // Find the section that's currently in view
-    for (let i = 0; i < this.sections.length; i++) {
-      const section = this.sections[i];
-      const element = document.getElementById(section);
-      
-      if (element) {
-        const offset = element.offsetTop;
-        const height = element.offsetHeight;
-        const bottom = offset + height;
-        
-        // If this is about section, be more aggressive with detection
-        if (section === 'about' && scrollPosition > this.sectionsOffsets['top']) {
-          const topSectionHeight = document.getElementById('top')?.offsetHeight || 0;
-          if (scrollPosition > this.sectionsOffsets['top'] && 
-              (scrollPosition < this.sectionsOffsets['projects'] || !this.sectionsOffsets['projects'])) {
-            activeSection = 'about';
-            break;
+  private handleResize = () => {
+    this.headerHeight = document.querySelector('app-header-navigation')?.clientHeight || 0;
+    this.setupObserver();
+  };
+
+  private getSectionElements(): HTMLElement[] {
+    return this.sections
+      .map(id => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+  }
+
+  private setupObserver() {
+    // Clean up
+    this.observer?.disconnect();
+    this.visibility.clear();
+
+    this.headerHeight = document.querySelector('app-header-navigation')?.clientHeight || 0;
+    this.detectScrollRoot();
+
+    const targets = this.getSectionElements();
+    if (!targets.length) return;
+
+    // Many thresholds so we get smooth visibility ratios
+    const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
+
+    this.observer = new IntersectionObserver(
+      entries => {
+        // Update visibility ratios
+        for (const entry of entries) {
+          const id = (entry.target as HTMLElement).id;
+          this.visibility.set(id, entry.intersectionRatio);
+        }
+
+        // Pick the section with the highest ratio (> 0)
+        let bestId = 'top';
+        let bestRatio = -1;
+        for (const id of this.sections) {
+          const r = this.visibility.get(id) ?? 0;
+          if (r > bestRatio) {
+            bestRatio = r;
+            bestId = id;
           }
         }
-        
-        // Check if we're in this section
-        if (adjustedScrollPosition >= offset) {
-          if (i > highestVisibleSection) {
-            highestVisibleSection = i;
-            activeSection = section;
+
+        // Top/bottom edge cases
+        const scrollY = (this.scrollRoot ? (this.scrollRoot as HTMLElement).scrollTop : window.scrollY) || 0;
+        const maxScroll = this.scrollRoot
+          ? (this.scrollRoot as HTMLElement).scrollHeight - (this.scrollRoot as HTMLElement).clientHeight
+          : document.documentElement.scrollHeight - window.innerHeight;
+
+        if (scrollY <= 2) bestId = 'top';
+        if (Math.abs(scrollY - maxScroll) < 2) {
+          // If at bottom, prefer the last section that actually exists
+          for (let i = this.sections.length - 1; i >= 0; i--) {
+            if (document.getElementById(this.sections[i])) {
+              bestId = this.sections[i];
+              break;
+            }
           }
         }
+
+        if (this.currentSection !== bestId) this.currentSection = bestId;
+      },
+      {
+        root: this.scrollRoot,                         // null = window
+        threshold: thresholds,
+        rootMargin: `-${this.headerHeight}px 0px 0px 0px` // account for sticky header
       }
+    );
+
+    // Observe each section
+    for (const el of targets) {
+      this.visibility.set(el.id, 0);
+      this.observer.observe(el);
     }
-    
-    if (this.currentSection !== activeSection) {
-      console.log('Changing active section from', this.currentSection, 'to', activeSection);
-      this.currentSection = activeSection;
-    }
+
+    // Kick an initial evaluation
+    setTimeout(() => this.forceEvaluateInitial(targets), 0);
   }
 
-  scrollToSection(section: string, event: Event) {
+  private forceEvaluateInitial(targets: HTMLElement[]) {
+    // If nothing is intersecting yet (e.g., sections too short), pick by scroll position
+    const scrollY = this.scrollRoot
+      ? (this.scrollRoot as HTMLElement).scrollTop
+      : window.scrollY;
+
+    let active = 'top';
+    for (const el of targets) {
+      if ((el.offsetTop - this.headerHeight) <= scrollY) active = el.id;
+    }
+    this.currentSection = active;
+  }
+
+  scrollToSection(sectionId: string, event: Event) {
     event.preventDefault();
-    
-    if (section === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      this.currentSection = 'top';
-      return;
+    const el = document.getElementById(sectionId);
+    if (!el) return;
+
+    const top = this.scrollRoot
+      ? el.getBoundingClientRect().top + (this.scrollRoot as HTMLElement).scrollTop - this.headerHeight
+      : el.getBoundingClientRect().top + window.scrollY - this.headerHeight;
+
+    if (this.scrollRoot) {
+      (this.scrollRoot as HTMLElement).scrollTo({ top, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top, behavior: 'smooth' });
     }
-    
-    // Get the element
-    const element = document.getElementById(section);
-    if (!element) {
-      console.error(`Element with id '${section}' not found!`);
-      return;
-    }
-    
-    // Calculate position with offset for fixed header
-    const headerHeight = document.querySelector('app-header-navigation')?.clientHeight || 0;
-    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-    const offsetPosition = elementPosition - headerHeight;
-    
-    // Scroll to the element
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    });
-    
-    // Set active section
-    this.currentSection = section;
+
+    this.currentSection = sectionId;
   }
 }
