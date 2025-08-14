@@ -190,3 +190,25 @@
   0% { opacity: 0; }
   100% { opacity: 0.8; }
 }
+
+@media (max-width: 600px) {
+  .circuit-line,
+  .circuit-line.secondary {
+    opacity: 0.3;
+    width: 60px !important;
+    height: 1px !important;
+  }
+  .node {
+    width: 8px !important;
+    height: 8px !important;
+    border-width: 1px !important;
+    opacity: 0.4;
+  }
+  .dot {
+    display: none;
+  }
+  .circuit-line:nth-child(n+10),
+  .circuit-line.secondary:nth-child(n+6) {
+    display: none;
+  }
+}
