@@ -13,6 +13,7 @@ import { HeaderNavigationComponent } from './header-navigation/header-navigation
 import { AboutMeComponent } from './about-me/about-me.component';
 import { aboutReducer } from './store/about/about.reducer';
 import { AboutEffects } from './store/about/about.effects';
+import { BackgroundComponent } from 'src/shared/background/background.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AboutEffects } from './store/about/about.effects';
     HomeComponent,
     Nl2brPipe,
     HeaderNavigationComponent,
-    AboutMeComponent
+    AboutMeComponent,
+    BackgroundComponent
   ],
   imports: [
     BrowserModule,

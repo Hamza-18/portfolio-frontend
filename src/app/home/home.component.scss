@@ -45,7 +45,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #010C15;
+  background: transparent; /* Make transparent to let background component show */
   position: relative;
   overflow: visible;
   padding: 2rem;
