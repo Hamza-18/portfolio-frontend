@@ -372,3 +372,21 @@ app-header-navigation {
   background-color: #011221; /* or whatever background you want */
   box-shadow: 0 2px 8px rgba(0,0,0,0.3); /* subtle shadow if desired */
 }
+
+.section-placeholder {
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 100px 0;
+  padding: 40px 20px;
+  background: rgba(99, 179, 237, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(99, 179, 237, 0.1);
+  
+  h2 {
+    color: #43D9AD;
+    font-family: 'JetBrains Mono', monospace;
+    text-align: center;
+  }
+}
