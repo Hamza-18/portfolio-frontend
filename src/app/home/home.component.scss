@@ -35,6 +35,8 @@
     overflow: hidden !important;
   }
 }
+@import './page-content.scss';
+
 :host {
   display: block;
   height: 100%;

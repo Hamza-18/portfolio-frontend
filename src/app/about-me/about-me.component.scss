@@ -12,6 +12,7 @@
   position: relative;   // make this relative for absolute children
   z-index: 1;           // reduced from 10 to still be above background but not block it
   background: transparent; // removed the solid background
+  margin-bottom: 4rem; // Add more space at the bottom
 
   &::before {
     content: '';

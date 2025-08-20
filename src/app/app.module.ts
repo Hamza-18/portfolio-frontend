@@ -17,6 +17,16 @@ import { BackgroundComponent } from 'src/shared/background/background.component'
 import { ExperienceComponent } from './experience/experience.component';
 import { ProjectsComponent } from './projects/projects.component';
 
+// Service imports
+import { ExperienceService } from './services/experience.service';
+import { ProjectService } from './services/project.service';
+
+// New store imports
+import { experienceReducer } from './store/experience/experience.reducer';
+import { projectReducer } from './store/projects/project.reducer';
+import { ExperienceEffects } from './store/experience/experience.effects';
+import { ProjectEffects } from './store/projects/project.effects';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,13 +42,24 @@ import { ProjectsComponent } from './projects/projects.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({ about: aboutReducer }),
-    EffectsModule.forRoot([AboutEffects]),
+    StoreModule.forRoot({
+      about: aboutReducer,
+      experience: experienceReducer,
+      projects: projectReducer
+    }),
+    EffectsModule.forRoot([
+      AboutEffects,
+      ExperienceEffects,
+      ProjectEffects
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
     })
   ],
-  providers: [],
+  providers: [
+    ExperienceService,
+    ProjectService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

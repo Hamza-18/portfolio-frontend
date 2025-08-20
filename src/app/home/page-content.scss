@@ -1,0 +1,17 @@
+/* Styles for consistent spacing between sections */
+.page-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+  /* Style for section wrappers */
+  .section-wrapper {
+    margin-bottom: 8rem; /* Large spacing between sections */
+    width: 100%;
+  }
+  
+  /* Remove margin from the last section wrapper */
+  .section-wrapper:last-child {
+    margin-bottom: 4rem; /* Some padding at the bottom of the page */
+  }
+}

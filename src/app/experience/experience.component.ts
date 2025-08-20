@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ExperienceService } from './experience.service';
-import { Experience } from './experience.model';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Experience } from '../store/experience/experience.model';
+import * as ExperienceActions from '../store/experience/experience.actions';
+import * as ExperienceSelectors from '../store/experience/experience.selectors';
 
 @Component({
   selector: 'app-experience',
@@ -8,31 +11,24 @@ import { Experience } from './experience.model';
   styleUrls: ['./experience.component.scss']
 })
 export class ExperienceComponent implements OnInit {
-  experiences: Experience[] = [];
-  selectedExperience: Experience | null = null;
-  loading = true;
-  error = false;
+  experiences$: Observable<Experience[]>;
+  selectedExperience$: Observable<Experience | null>;
+  loading$: Observable<boolean>;
+  error$: Observable<string | null>;
 
-  constructor(private experienceService: ExperienceService) {}
+  constructor(private store: Store) {
+    this.experiences$ = this.store.select(ExperienceSelectors.selectExperiences);
+    this.selectedExperience$ = this.store.select(ExperienceSelectors.selectSelectedExperience);
+    this.loading$ = this.store.select(ExperienceSelectors.selectExperienceLoading);
+    this.error$ = this.store.select(ExperienceSelectors.selectExperienceError);
+  }
 
   ngOnInit(): void {
-    this.experienceService.getExperiences().subscribe({
-      next: (data) => {
-        this.experiences = data;
-        if (data.length > 0) {
-          this.selectedExperience = data[0];
-        }
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching experiences:', err);
-        this.error = true;
-        this.loading = false;
-      }
-    });
+    // Dispatch action to load experiences
+    this.store.dispatch(ExperienceActions.loadExperiences());
   }
 
   selectExperience(experience: Experience): void {
-    this.selectedExperience = experience;
+    this.store.dispatch(ExperienceActions.selectExperience({ experience }));
   }
 }
