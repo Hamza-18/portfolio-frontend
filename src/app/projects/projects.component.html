@@ -1,0 +1,104 @@
+<section id="projects" class="projects-section">
+  <div class="projects-card">
+    <h2>Projects</h2>
+    
+    <div *ngIf="loading$ | async" class="loading">
+      <div class="terminal-loader">
+        <div class="scanner"></div>
+        <p>Loading projects data...</p>
+      </div>
+    </div>
+
+    <div *ngIf="error$ | async as errorMsg" class="error-message">
+      <p>Failed to load projects data: {{ errorMsg }}</p>
+    </div>
+
+    <div *ngIf="!(loading$ | async) && !(error$ | async)" class="projects-container">
+      <!-- Controls -->
+      <div class="controls">
+        <div class="categories">
+          <button 
+            *ngFor="let category of categories$ | async" 
+            class="category-btn" 
+            [class.active]="(activeCategory$ | async) === category"
+            (click)="filterByCategory(category)">
+            {{ category }}
+          </button>
+        </div>
+        <div class="search-box">
+          <i class="search-icon">🔍</i>
+          <input 
+            type="text" 
+            placeholder="Search projects..."
+            (input)="onSearch($event)"
+          >
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="projects-grid" *ngIf="!(selectedProject$ | async)">
+        <div 
+          *ngFor="let project of filteredProjects$ | async" 
+          class="project-card"
+          [class.featured]="project.featured"
+          (click)="selectProject(project)">
+          <div class="project-thumbnail">
+            <img [src]="project.thumbnail" [alt]="project.title + ' thumbnail'">
+            <div class="project-category">{{ project.category }}</div>
+          </div>
+          <div class="project-info">
+            <h3>{{ project.title }}</h3>
+            <p class="project-description">{{ project.description | slice:0:100 }}{{ project.description.length > 100 ? '...' : '' }}</p>
+            <div class="project-tech">
+              <span *ngFor="let tech of project.technologies.slice(0, 3)">{{ tech }}</span>
+              <span *ngIf="project.technologies.length > 3">+{{ project.technologies.length - 3 }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Results -->
+      <div class="no-results" *ngIf="(filteredProjects$ | async)?.length === 0 && !(selectedProject$ | async)">
+        <p>No projects found matching your criteria.</p>
+      </div>
+
+      <!-- Project Details -->
+      <div class="project-details" *ngIf="selectedProject$ | async as selectedProject">
+        <button class="back-btn" (click)="closeProjectDetails()">
+          <span>←</span> Back to Projects
+        </button>
+
+        <div class="project-header">
+          <h2>{{ selectedProject.title }}</h2>
+          <div class="project-category-badge">{{ selectedProject.category }}</div>
+        </div>
+
+        <div class="project-showcase">
+          <img [src]="selectedProject.thumbnail" [alt]="selectedProject.title + ' thumbnail'">
+        </div>
+
+        <div class="project-description">
+          <p>{{ selectedProject.description }}</p>
+        </div>
+
+        <div class="project-technologies">
+          <h3>Technologies Used</h3>
+          <div class="tech-tags">
+            <span *ngFor="let tech of selectedProject.technologies">{{ tech }}</span>
+          </div>
+        </div>
+
+        <div class="project-links">
+          <a *ngIf="selectedProject.githubUrl" [href]="selectedProject.githubUrl" target="_blank" class="github-link">
+            <span class="icon">GitHub</span>
+            View Code
+          </a>
+          <a *ngIf="selectedProject.demoUrl" [href]="selectedProject.demoUrl" target="_blank" class="demo-link">
+            <span class="icon">Demo</span>
+            Live Demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

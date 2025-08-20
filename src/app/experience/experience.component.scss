@@ -1,0 +1,261 @@
+.experience-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #e5e9f0;
+  font-family: 'JetBrains Mono', monospace;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 1;
+  margin-top: 2rem; // Add some top margin
+
+  .experience-card {
+    background: #0B0C0C;
+    border-radius: 8px;
+    max-width: 900px;
+    width: 100%;
+    min-height: 700px;
+    margin: 0 auto;
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    padding: 2.5rem 2rem;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    color: #43D9AD;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #43D9AD, #4D5BCE);
+      border-radius: 3px;
+    }
+  }
+
+  // Loading state
+  .loading {
+    width: 100%;
+    padding: 3rem 0;
+    
+    .terminal-loader {
+      width: 80%;
+      max-width: 400px;
+      height: 150px;
+      background: #111111;
+      border: 1px solid #43D9AD;
+      border-radius: 6px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      
+      .scanner {
+        width: 100%;
+        height: 3px;
+        background: #43D9AD;
+        position: absolute;
+        top: 0;
+        left: 0;
+        animation: scan 2s linear infinite;
+        box-shadow: 0 0 10px rgba(67, 217, 173, 0.8);
+      }
+      
+      p {
+        color: #43D9AD;
+        font-size: 1rem;
+        text-align: left;
+        margin-top: 40px;
+        animation: blink 1s step-end infinite;
+      }
+    }
+  }
+  
+  // Error state
+  .error-message {
+    color: #E06C75;
+    padding: 2rem;
+    border: 1px solid #E06C75;
+    border-radius: 6px;
+    margin: 2rem 0;
+    
+    p {
+      color: #E06C75;
+    }
+  }
+  
+  // Experience container
+  .experience-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+    
+    // Companies list sidebar
+    .companies-list {
+      width: 30%;
+      border-right: 1px solid #1E2D3D;
+      max-height: 600px;
+      overflow-y: auto;
+      
+      @media (max-width: 768px) {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #1E2D3D;
+        max-height: 250px;
+      }
+      
+      .company-item {
+        padding: 15px;
+        text-align: left;
+        cursor: pointer;
+        border-left: 3px solid transparent;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background-color: rgba(77, 91, 206, 0.1);
+        }
+        
+        &.active {
+          background-color: rgba(77, 91, 206, 0.2);
+          border-left: 3px solid #4D5BCE;
+        }
+        
+        .company-name {
+          font-weight: bold;
+          color: #e5e9f0;
+          font-size: 1rem;
+        }
+        
+        .duration {
+          font-size: 0.8rem;
+          color: #607B96;
+          margin-top: 5px;
+        }
+      }
+    }
+    
+    // Experience details section
+    .experience-details {
+      width: 70%;
+      padding: 0 2rem;
+      text-align: left;
+      min-height: 500px;
+      
+      @media (max-width: 768px) {
+        width: 100%;
+        padding: 2rem 0 0 0;
+      }
+      
+      .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        
+        .logo-container {
+          width: 80px;
+          height: 80px;
+          margin-right: 1.5rem;
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          
+          .company-logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        }
+        
+        .title-container {
+          h3 {
+            color: #e5e9f0;
+            font-size: 1.5rem;
+            margin: 0 0 5px 0;
+          }
+          
+          h4 {
+            color: #43D9AD;
+            font-size: 1.2rem;
+            margin: 0 0 10px 0;
+          }
+          
+          .duration-badge {
+            display: inline-block;
+            background: rgba(77, 91, 206, 0.2);
+            color: #4D5BCE;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+          }
+        }
+      }
+      
+      .description {
+        margin-bottom: 2rem;
+        
+        p {
+          color: #A9B7C6;
+          line-height: 1.6;
+          font-size: 1rem;
+        }
+      }
+      
+      .skills-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        
+        .skill-tag {
+          background: rgba(67, 217, 173, 0.1);
+          color: #43D9AD;
+          padding: 6px 12px;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          border: 1px solid rgba(67, 217, 173, 0.3);
+          transition: all 0.3s ease;
+          
+          &:hover {
+            background: rgba(67, 217, 173, 0.2);
+            transform: translateY(-2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes scan {
+  0% { top: 0; }
+  50% { top: calc(100% - 3px); }
+  100% { top: 0; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
