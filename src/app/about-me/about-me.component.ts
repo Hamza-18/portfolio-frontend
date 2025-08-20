@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { AboutMe } from '../store/about/about.model';
 import * as AboutActions from '../store/about/about.actions';
 import * as AboutSelectors from '../store/about/about.selectors';
@@ -22,6 +22,13 @@ export class AboutMeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(AboutActions.loadAboutMe());
+    this.aboutMe$ = this.store.select(AboutSelectors.selectAboutMe).pipe(
+      tap((aboutMe) => {
+        if (!aboutMe) {
+          console.log("here")
+          this.store.dispatch(AboutActions.loadAboutMe());
+        }
+      })
+    );
   }
 }

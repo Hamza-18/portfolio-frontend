@@ -6,7 +6,7 @@
     <div *ngIf="loading$ | async" class="loader">Loading...</div>
     
     <ng-container *ngIf="aboutMe$ | async as aboutMe; else defaultContent">
-      <h1>{{ aboutMe.title || 'About Me' }}</h1>
+      <h1>'About Me</h1>
       <p [innerHTML]="aboutMe.description"></p>
       
       <div *ngIf="aboutMe.skills?.length" class="skills-container">

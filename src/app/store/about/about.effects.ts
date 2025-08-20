@@ -11,8 +11,8 @@ export class AboutEffects {
     ofType(AboutActions.loadAboutMe),
     mergeMap(() => this.aboutService.getAboutMe()
       .pipe(
-        map(aboutMe => AboutActions.loadAboutMeSuccess({ aboutMe })),
-        catchError(error => of(AboutActions.loadAboutMeFailure({ error })))
+        map(aboutMe => {console.log(aboutMe); return AboutActions.loadAboutMeSuccess({ aboutMe })}),
+        catchError(error => {console.log(error); return of(AboutActions.loadAboutMeFailure({ error }))})
       ))
   ));
 
