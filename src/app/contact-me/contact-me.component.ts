@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactMeComponent implements OnInit {
   // Contact info
-  email: string = 'your.email@example.com';
-  location: string = 'San Francisco, CA';
-  
+  email: string = 'hamzabashir1022@gmail.com';
+  location: string = 'Mountain View, CA';
+
   // Social media
   socials = {
     github: {
@@ -27,7 +27,7 @@ export class ContactMeComponent implements OnInit {
   };
   
   // Resume download
-  resumeUrl: string = '#';
+  resumeUrl: string = 'assets/Hamza Bashir.pdf';
 
   constructor() { }
 
