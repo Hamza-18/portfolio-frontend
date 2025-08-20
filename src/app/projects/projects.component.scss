@@ -1,0 +1,23 @@
+.projects-section {
+  padding: 60px 0 40px 0;
+  text-align: center;
+  background: rgba(1, 18, 33, 0.85);
+  border-radius: 12px;
+  margin: 40px auto 0 auto;
+  max-width: 900px;
+  box-shadow: 0 4px 32px 0 rgba(67, 217, 173, 0.08);
+  border: 1px solid rgba(67, 217, 173, 0.12);
+  min-height: 180px;
+  h2 {
+    color: #43D9AD;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  p {
+    color: #e5e9f0;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

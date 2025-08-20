@@ -14,6 +14,8 @@ import { AboutMeComponent } from './about-me/about-me.component';
 import { aboutReducer } from './store/about/about.reducer';
 import { AboutEffects } from './store/about/about.effects';
 import { BackgroundComponent } from 'src/shared/background/background.component';
+import { ExperienceComponent } from './experience/experience.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { BackgroundComponent } from 'src/shared/background/background.component'
     Nl2brPipe,
     HeaderNavigationComponent,
     AboutMeComponent,
-    BackgroundComponent
+    BackgroundComponent,
+    ExperienceComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
