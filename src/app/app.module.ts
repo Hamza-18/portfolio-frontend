@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -26,6 +27,7 @@ import { experienceReducer } from './store/experience/experience.reducer';
 import { projectReducer } from './store/projects/project.reducer';
 import { ExperienceEffects } from './store/experience/experience.effects';
 import { ProjectEffects } from './store/projects/project.effects';
+import { ContactMeComponent } from './contact-me/contact-me.component';
 
 @NgModule({
   declarations: [
@@ -36,11 +38,13 @@ import { ProjectEffects } from './store/projects/project.effects';
     AboutMeComponent,
     BackgroundComponent,
     ExperienceComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    ContactMeComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule,
     StoreModule.forRoot({
       about: aboutReducer,
