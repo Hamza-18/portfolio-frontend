@@ -76,11 +76,9 @@
         <div class="project-showcase">
           <img [src]="selectedProject.thumbnail" [alt]="selectedProject.title + ' thumbnail'">
         </div>
-
-        <div class="project-description">
-          <p>{{ selectedProject.description }}</p>
-        </div>
-
+        <ul class="project-description">
+          <li *ngFor="let line of selectedProject.description">{{ line }}</li>
+        </ul>
         <div class="project-technologies">
           <h3>Technologies Used</h3>
           <div class="tech-tags">

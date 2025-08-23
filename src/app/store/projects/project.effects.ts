@@ -17,9 +17,10 @@ export class ProjectEffects {
       ofType(ProjectActions.loadProjects),
       mergeMap(() => 
         this.projectService.getProjects().pipe(
-          map((projects: Project[]) => 
-            ProjectActions.loadProjectsSuccess({ projects })
-          ),
+          map((projects: Project[]) => {
+            console.log("load projects");
+            return ProjectActions.loadProjectsSuccess({ projects });
+          }),
           catchError(error => 
             of(ProjectActions.loadProjectsFailure({ error: error.message }))
           )
