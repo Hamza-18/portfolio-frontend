@@ -34,10 +34,11 @@
           </div>
         </div>
 
-        <div class="description">
-          <p>{{ selectedExperience.description }}</p>
-        </div>
+      <ul class="description-list">
+        <li *ngFor="let line of selectedExperience.description">{{ line }}</li>
+      </ul>
 
+      <br>
         <div class="skills-container">
           <div class="skill-tag" *ngFor="let skill of selectedExperience.skills">
             {{ skill }}
