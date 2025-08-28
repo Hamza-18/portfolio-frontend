@@ -21,6 +21,7 @@ import { ProjectsComponent } from './projects/projects.component';
 // Service imports
 import { ExperienceService } from './services/experience.service';
 import { ProjectService } from './services/project.service';
+import { ChatbotService } from './services/chatbot.service';
 
 // New store imports
 import { experienceReducer } from './store/experience/experience.reducer';
@@ -28,6 +29,7 @@ import { projectReducer } from './store/projects/project.reducer';
 import { ExperienceEffects } from './store/experience/experience.effects';
 import { ProjectEffects } from './store/projects/project.effects';
 import { ContactMeComponent } from './contact-me/contact-me.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { ContactMeComponent } from './contact-me/contact-me.component';
     BackgroundComponent,
     ExperienceComponent,
     ProjectsComponent,
-    ContactMeComponent
+    ContactMeComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { ContactMeComponent } from './contact-me/contact-me.component';
   ],
   providers: [
     ExperienceService,
-    ProjectService
+    ProjectService,
+    ChatbotService
   ],
   bootstrap: [AppComponent]
 })
