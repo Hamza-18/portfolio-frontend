@@ -7,7 +7,7 @@ import { AboutMe } from '../store/about/about.model';
   providedIn: 'root'
 })
 export class AboutService {
-  private apiUrl = 'http://localhost:5000';
+  private apiUrl = 'https://portfolio-backend-vgir.onrender.com';
 
   constructor(private http: HttpClient) { }
 

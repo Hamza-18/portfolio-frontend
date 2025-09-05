@@ -21,7 +21,7 @@ export interface ChatError {
   providedIn: 'root'
 })
 export class ChatbotService {
-  private readonly apiUrl = 'http://localhost:5000'; // Backend API URL
+  private readonly apiUrl = 'https://portfolio-backend-vgir.onrender.com'; // Backend API URL
   private readonly chatEndpoint = '/api/chatbot/chat';
 
   constructor(private http: HttpClient) {}

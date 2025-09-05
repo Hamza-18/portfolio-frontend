@@ -9,7 +9,7 @@ import { Project } from '../store/projects/project.model';
 export class ProjectService {
   constructor(private http: HttpClient) { }
 
-    private apiUrl = 'http://localhost:5000';
+    private apiUrl = 'https://portfolio-backend-vgir.onrender.com';
   
   getProjects(): Observable<Project[]> {
       return this.http.get<Project[]>(`${this.apiUrl}/projects`);

@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ExperienceService {
-  private apiUrl = 'http://localhost:5000';
+  private apiUrl = 'https://portfolio-backend-vgir.onrender.com';
 
   constructor(private http: HttpClient) { }
 
