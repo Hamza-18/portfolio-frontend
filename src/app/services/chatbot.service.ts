@@ -22,7 +22,7 @@ export interface ChatError {
 })
 export class ChatbotService {
   private readonly apiUrl = 'http://localhost:5000'; // Backend API URL
-  private readonly chatEndpoint = '/chat';
+  private readonly chatEndpoint = '/api/chatbot/chat';
 
   constructor(private http: HttpClient) {}
 
