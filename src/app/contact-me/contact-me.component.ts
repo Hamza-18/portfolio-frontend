@@ -13,16 +13,12 @@ export class ContactMeComponent implements OnInit {
   // Social media
   socials = {
     github: {
-      url: 'https://github.com/yourusername',
-      username: '@yourusername'
+      url: 'https://github.com/Hamza-18',
+      username: '@Hamza-18'
     },
     linkedin: {
-      url: 'https://linkedin.com/in/yourusername',
-      name: 'Your Name'
-    },
-    twitter: {
-      url: 'https://twitter.com/yourusername',
-      username: '@yourusername'
+      url: 'https://www.linkedin.com/in/hamza-bashir-3214a11ab/',
+      name: 'Hamza Bashir'
     }
   };
   
